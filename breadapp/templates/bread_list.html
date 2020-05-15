@@ -1,0 +1,14 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+  <h1>Welcome to the Bread App</h1>
+
+  <ol class="breads">
+    {% for bread in all_breads %}
+      <li class="bread">
+        {{ bread.name }} {{ bread.region }}
+      </li>
+    {% endfor %}
+  </ol>
+
+{% endblock content %}

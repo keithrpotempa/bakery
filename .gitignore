@@ -30,4 +30,4 @@ media/
 *.pid
 
 #db location
-breadapp/views/connection.py
+breadapp/connection.py
