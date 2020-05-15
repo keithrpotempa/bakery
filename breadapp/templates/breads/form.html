@@ -3,28 +3,42 @@
 {% block content %}
   <h2>Bread Form</h2>
 
-    {% comment %} {% if bread.id is not None %} {% endcomment %}
-        {% comment %} <form action="{% url 'breadapp:bread' bread.id %}" method="post"> {% endcomment %}
-    {% comment %} {% else %} {% endcomment %}
-        <form action="{% url 'breadapp:breads' %}" method="post">
-    {% comment %} {% endif %}  {% endcomment %}
+  {% if bread.id is not None %}
+    <form action="{% url 'breadapp:bread' bread.id %}" method="post">
+  {% else %}
+    <form action="{% url 'breadapp:breads' %}" method="post">
+  {% endif %} 
+
       {% csrf_token %}
       <fieldset>
           <label for="name">Name: </label>
-          <input id="name" type="text" name="name" value="{{ bread.name }}">
+          <input 
+            id="name" 
+            type="text" 
+            name="name" 
+            value="{{ bread.name }}"
+            {% comment %} 
+                The name field is Disabled if this is an edit
+                per the exercise requirements
+            {% endcomment %}
+            {% if bread.id is not None %}
+            disabled
+            {% endif %}
+          >
       </fieldset>
+
       <fieldset>
-          <label for="region">Region: </label>
-          <input id="region" type="text" name="region" value="{{ bread.region }}">
+        <label for="region">Region: </label>
+        <input id="region" type="text" name="region" value="{{ bread.region }}">
       </fieldset>
 
       {% if bread.id is not None %}
-          <input type="hidden" name="actual_method" value="PUT">
-          <input type="submit" value="Update" />
+        <input type="hidden" name="actual_method" value="PUT">
+        <input type="submit" value="Update" />
       {% else %}
-          <input type="submit" value="Create" />
+        <input type="submit" value="Create" />
       {% endif %}
-    </form>
 
+    </form>
 
 {% endblock content %}

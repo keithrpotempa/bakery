@@ -62,11 +62,12 @@ def bread_details(request, bread_id):
         } 
         
         return render(request, template, context)
-      
-    # Check if this POST is for deleting a bread_ingredient
+    
+    # Check if it is a POST (as is the case with delete or edit)  
     elif request.method == "POST":
         form_data = request.POST
         
+        # Check if this POST is for deleting a bread_ingredient
         if (
             "actual_method" in form_data
             # The DELETE value also has the ingredient_bread_id
@@ -83,4 +84,22 @@ def bread_details(request, bread_id):
                 """, (bread_ingredient_id,))
             # This args is the bread id to pass into the path
             # https://docs.djangoproject.com/en/3.0/ref/urlresolvers/#django.urls.reverse
+            return redirect(reverse('breadapp:bread', args=[bread_id]))
+        
+        # Check if it is an Edit
+        elif (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+        
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+                
+                db_cursor.execute("""
+                UPDATE breadapp_bread
+                SET region = ?
+                WHERE id = ?
+                """,
+                (form_data['region'], bread_id))
+                
             return redirect(reverse('breadapp:bread', args=[bread_id]))

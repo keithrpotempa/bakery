@@ -31,4 +31,9 @@
       {% endfor %}
     </ul>
 
+    <form action="{% url 'breadapp:bread_edit_form' bread.id %}" method="GET">
+        {% csrf_token %}
+        <button>Edit Bread</button>
+    </form>
+
 {% endblock %}
