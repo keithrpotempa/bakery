@@ -1,0 +1,16 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+    
+    <h1>{{ bread.name }}</h1>
+    <p>Region: {{ bread.region }}</p>
+    <p>Ingredients Required:</p>
+    <ul>
+      {% for ingredient in ingredients %}
+        <li>
+          {{ ingredient.name }}: {{ ingredient.amount }}
+        </li>
+      {% endfor %}
+    </ul>
+
+{% endblock %}
