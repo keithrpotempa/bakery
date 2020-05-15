@@ -1,0 +1,30 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+  <h2>Bread Form</h2>
+
+    {% comment %} {% if bread.id is not None %} {% endcomment %}
+        {% comment %} <form action="{% url 'breadapp:bread' bread.id %}" method="post"> {% endcomment %}
+    {% comment %} {% else %} {% endcomment %}
+        <form action="{% url 'breadapp:breads' %}" method="post">
+    {% comment %} {% endif %}  {% endcomment %}
+      {% csrf_token %}
+      <fieldset>
+          <label for="name">Name: </label>
+          <input id="name" type="text" name="name" value="{{ bread.name }}">
+      </fieldset>
+      <fieldset>
+          <label for="region">Region: </label>
+          <input id="region" type="text" name="region" value="{{ bread.region }}">
+      </fieldset>
+
+      {% if bread.id is not None %}
+          <input type="hidden" name="actual_method" value="PUT">
+          <input type="submit" value="Update" />
+      {% else %}
+          <input type="submit" value="Create" />
+      {% endif %}
+    </form>
+
+
+{% endblock content %}

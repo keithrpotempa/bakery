@@ -1,7 +1,12 @@
 {% comment %} {% extends 'shared/base.html' %} {% endcomment %}
 
 {% block content %}
-  <h1>Welcome to the Bread App</h1>
+  <h2>Bread List</h2>
+
+  <a href="{% url 'breadapp:bread_form' %}">
+    Add New Bread
+  </a>
+
 
   <ol class="breads">
     {% for bread in all_breads %}
