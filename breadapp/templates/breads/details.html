@@ -9,6 +9,24 @@
       {% for ingredient in ingredients %}
         <li>
           {{ ingredient.name }}: {{ ingredient.amount }}
+          <form 
+            action="{% url 'breadapp:bread' bread.id %}" 
+            method="POST" 
+            style="display:inline"
+          >
+            {% csrf_token %}
+            {% comment %} 
+              The value includes the bread_ingredient_id, which is extracted
+              when the POST / Delete is handled in order to delete that 
+              particular relationship (without deleting the ingredient itself).
+            {% endcomment %}
+            <input 
+              type="hidden" 
+              name="actual_method" 
+              value="DELETE--{{ ingredient.bread_ingredient_id }}"
+            >
+            <button>Delete</button>
+          </form>
         </li>
       {% endfor %}
     </ul>
