@@ -1,0 +1,39 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+    
+    <h1>{{ bread.name }}</h1>
+    <p>Region: {{ bread.region }}</p>
+    <p>Ingredients Required:</p>
+    <ul>
+      {% for ingredient in ingredients %}
+        <li>
+          {{ ingredient.name }}: {{ ingredient.amount }}
+          <form 
+            action="{% url 'breadapp:bread' bread.id %}" 
+            method="POST" 
+            style="display:inline"
+          >
+            {% csrf_token %}
+            {% comment %} 
+              The value includes the bread_ingredient_id, which is extracted
+              when the POST / Delete is handled in order to delete that 
+              particular relationship (without deleting the ingredient itself).
+            {% endcomment %}
+            <input 
+              type="hidden" 
+              name="actual_method" 
+              value="DELETE--{{ ingredient.bread_ingredient_id }}"
+            >
+            <button>Delete</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <form action="{% url 'breadapp:bread_edit_form' bread.id %}" method="GET">
+        {% csrf_token %}
+        <button>Edit Bread</button>
+    </form>
+
+{% endblock %}

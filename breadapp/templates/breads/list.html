@@ -1,0 +1,21 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+  <h2>Bread List</h2>
+
+  <a href="{% url 'breadapp:bread_form' %}">
+    Add New Bread
+  </a>
+
+
+  <ol class="breads">
+    {% for bread in all_breads %}
+      <li class="bread">
+        <a href="{% url 'breadapp:bread' bread.id %}">
+          {{ bread.name }}: {{ bread.region }}
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+
+{% endblock content %}

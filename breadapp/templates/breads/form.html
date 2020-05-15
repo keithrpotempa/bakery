@@ -1,0 +1,44 @@
+{% comment %} {% extends 'shared/base.html' %} {% endcomment %}
+
+{% block content %}
+  <h2>Bread Form</h2>
+
+  {% if bread.id is not None %}
+    <form action="{% url 'breadapp:bread' bread.id %}" method="post">
+  {% else %}
+    <form action="{% url 'breadapp:breads' %}" method="post">
+  {% endif %} 
+
+      {% csrf_token %}
+      <fieldset>
+          <label for="name">Name: </label>
+          <input 
+            id="name" 
+            type="text" 
+            name="name" 
+            value="{{ bread.name }}"
+            {% comment %} 
+                The name field is Disabled if this is an edit
+                per the exercise requirements
+            {% endcomment %}
+            {% if bread.id is not None %}
+            disabled
+            {% endif %}
+          >
+      </fieldset>
+
+      <fieldset>
+        <label for="region">Region: </label>
+        <input id="region" type="text" name="region" value="{{ bread.region }}">
+      </fieldset>
+
+      {% if bread.id is not None %}
+        <input type="hidden" name="actual_method" value="PUT">
+        <input type="submit" value="Update" />
+      {% else %}
+        <input type="submit" value="Create" />
+      {% endif %}
+
+    </form>
+
+{% endblock content %}
